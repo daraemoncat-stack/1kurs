@@ -3,19 +3,8 @@
 
 #include <QMainWindow>
 #include <QLineEdit>
-#include <QComboBox>
-#include <QLabel>
-#include <QTimer>
-#include <QTime>
-#include <QTableWidget>
-#include <QSettings>
-#include <QDialog>
-
-QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
-QT_END_NAMESPACE
+#include <QPushButton>
+#include "treewidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -25,35 +14,18 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private:
-    static constexpr int BSize = 9; // размер доски
-    static constexpr int QSize = 3; // размер квадрата/блока
-    QLineEdit* cells[BSize][BSize];
-    int board[BSize][BSize];
-    QComboBox* DifficultyBox;
-    QTimer* GameTimer;
-    QTime* StartTime;
-    QLabel* TimerLabel;
-    int seconds;
-
-    void SetupUI();
-    void CellStyle(QLineEdit* cell, int i, int j, bool error = false);
-    void MakeBoard();
-    bool FillBoard(int row, int col);
-    bool SafePlace(int row, int col, int num);
-    void UniqPuzzle(int removeCount);
-    bool SolveCount(int& count);
-    void ShowBoard();
-    bool RightSolution();
-    void ResetTimer();
-    void ShowHighScores();
-    void SetupMainWindow();
-    void ShowStartWindow();
-
 private slots:
-    void CheckSolution();
-    void NewGame();
-    void UpdateTimer();
+    void onAddClicked();
+    void onRemoveClicked();
+    void onClearClicked();
+
+private:
+    Tree* m_tree;
+    TreeWidget* m_treeWidget;
+    QLineEdit* m_inputField;
+    QPushButton* m_addButton;
+    QPushButton* m_removeButton;
+    QPushButton* m_clearButton;
 };
 
 #endif // MAINWINDOW_H
